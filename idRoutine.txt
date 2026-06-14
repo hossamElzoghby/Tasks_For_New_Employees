@@ -1,0 +1,36 @@
+package com.MBSC.TRAIN.EMPLOYEE;
+
+import com.temenos.t24.api.complex.eb.templatehook.TransactionContext;
+import com.temenos.t24.api.hook.system.RecordLifecycle;
+
+/**
+ * ID validation routine
+ *
+ * @author Saad Mohamed Saad
+ */
+public class IdRoutine extends RecordLifecycle {
+
+    @Override
+    public String checkId(String currentRecordId, TransactionContext transactionContext) {
+
+        // Check format: XXXYYBBbb
+        // XXX = 3 digits
+        // YY  = 2 digits
+        // BB  = 2 digits
+        // bb  = 2 letters
+        if (!currentRecordId.matches("\\d{7}[A-Za-z]{2}")) {
+            throw new RuntimeException("INVALID ID FORMAT");
+        }
+
+        // Extract YY and BB
+        int yy = Integer.parseInt(currentRecordId.substring(3, 5));
+        int bb = Integer.parseInt(currentRecordId.substring(5, 7));
+
+        // YY must not be greater than BB
+        if (yy > bb) {
+            throw new RuntimeException("INVALID ID FORMAT");
+        }
+
+        return currentRecordId;
+    }
+}
