@@ -1,0 +1,37 @@
+package com.MBSC.TRAIN.EMPLOYEE;
+
+import com.temenos.api.TStructure;
+import com.temenos.api.TValidationResponse;
+import com.temenos.t24.api.complex.eb.templatehook.TransactionContext;
+import com.temenos.t24.api.hook.system.RecordLifecycle;
+import com.temenos.t24.api.records.customer.CustomerRecord;
+
+/**
+ * TODO: Document me!
+ *
+ * @author Saad Mohamed Saad
+ *
+ */
+public class InputRoutine extends RecordLifecycle {
+
+    @Override
+    public TValidationResponse validateRecord(String application, String currentRecordId, TStructure currentRecord,
+            TStructure unauthorisedRecord, TStructure liveRecord, TransactionContext transactionContext) {
+        // TODO Auto-generated method stub
+        CustomerRecord cus = new CustomerRecord(currentRecord);
+        String sec=cus.getSector().getValue();
+        if(!sec.equals("1001")){
+            throw new Error("Customer Must be Indvidual");
+        }
+        
+        return cus.getValidationResponse();
+    }
+    
+    
+
+}
+    }
+    
+    
+
+}
