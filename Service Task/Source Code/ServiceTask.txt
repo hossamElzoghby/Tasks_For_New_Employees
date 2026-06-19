@@ -1,0 +1,72 @@
+package com.MBSC.TRAIN.EMPLOYEE;
+import java.util.List;
+
+import com.temenos.api.TStructure;
+import com.temenos.t24.api.complex.eb.servicehook.ServiceData;
+import com.temenos.t24.api.complex.eb.servicehook.TransactionData;
+import com.temenos.t24.api.hook.system.ServiceLifecycle;
+import com.temenos.t24.api.records.fundstransfer.FundsTransferRecord;
+import com.temenos.t24.api.records.stservicetable.StServiceTableRecord;
+import com.temenos.t24.api.system.DataAccess;
+import com.temenos.t24.api.tables.stservicetable.StServiceTableTable;
+import com.temenos.tafj.api.client.impl.T24Context;
+
+
+/**
+ * TODO: Document me!
+ *
+ * @author Saad Mohamed Saad
+ *
+ */
+
+
+
+
+public class serviceTask  extends ServiceLifecycle{
+    public void postUpdateRequest(String id, ServiceData serviceData, String controlItem,
+            List<TransactionData> transactionData, List<TStructure> records) { // NAMED "Service"
+        String transaction, debit_amount, debit_ccy, credit_acc;
+        DataAccess da = new DataAccess (this);
+        
+        TStructure tbs = da.getRecord("ST.SERVICE.TABLE", "SYSTEM");
+        
+        StServiceTableRecord ser_tbl = new StServiceTableRecord(tbs);
+        
+        ser_tbl.setAccountId(id);
+        transaction = ser_tbl.getTransactionType().toString();
+        debit_amount = ser_tbl.getDebitAmountNo().toString();
+        debit_ccy = ser_tbl.getDebitCurrency().toString();
+        credit_acc = ser_tbl.getCreditAcocunt().toString();
+        
+        
+        FundsTransferRecord ftRec= new FundsTransferRecord();
+        
+        ftRec.setTransactionType(transaction);
+        ftRec.setDebitAcctNo(id);
+        ftRec.setDebitAmount(debit_amount);
+        ftRec.setDebitCurrency(debit_ccy);
+        ftRec.setCreditAcctNo(credit_acc);
+        
+        TransactionData td =new TransactionData();
+        td.setFunction("INPUT");
+        td.setNumberOfAuthoriser("0");
+        td.setSourceId("BULK.OFS");
+        td.setVersionId("FUNDS.TRANSFER,");
+        
+        transactionData.add(td);
+        records.add(ftRec.toStructure());
+        
+        
+        
+    }
+
+    public List<String> getIds(ServiceData serviceData, List<String> controlList) { // NAMED "Service.Select    "
+        List<String> recIds = null;
+        DataAccess da = new DataAccess(this);
+        
+      
+        recIds = da.selectRecords("BNK", "ACCOUNT", "","WITH CURRENCY EQ EUR AND CATEGORY EQ 1001");
+      
+        return recIds;
+    }
+}
