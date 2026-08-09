@@ -11,3 +11,21 @@
 #### Create a composite screen , add your enquiry in the top .
 #### 1 - auth and delete buttons open version 2 “ACCOUNT,MBSC.AUTH”
 #### 2 - amend button open version 1 “ACCOUNT,MBSC.INPUTT”
+
+### TASK 4 (9/8/2026)
+#### Enquiry on Account table
+#### Fields:
+- Id
+- Account title
+- Category
+- Working balance
+- Customer Id
+- Sector
+
+#### Selection criteria:
+- Id
+- Account title
+- Category
+
+#### Fixed Selection
+- Category range from 1001 1999
