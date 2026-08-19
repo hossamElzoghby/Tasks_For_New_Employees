@@ -32,41 +32,39 @@
 
 ### TASK 4 (19/8/2026)
 *===============================================================================
-TABLE 1 "MBSC.TRAIN."EMPLOYEE NAME"
-*===================
-Requirement fields:
-*===================
-DESCRIPTION 	: lenght :- 50  , Type :- ANY     , Multi language
-TENOR  		: lenght :- 3   , Type :- Numeric
-FREQUENCY 	: lenght :- 3   , Type :- Numeric
-RATE  		: lenght :- 6   , Type :- Numeric
-INT.RATE 	: lenght :- 8   , Type :- Numeric
-CATEGORY 	: lenght :- 8   , Type :- Numeric , linked to table  "CATEGORY"
-CURRENCY        : lenght :- 3 	, Type :- ANY     , linked to table  "CURRENCY"
-DENOMINATIONS   : lenght :- 34  , Type :- Numeric 
-CUSTOMER.ID     : lenght :- 8   , Type :- Numeric , linked to table "CUSTOMER"
-BASIC.KEY  	: lenght :- 8   , Type :- Numeric
-INT.SPREAD      : lenght :- 8   , Type :- Numeric
-BASIC.KEY  	: lenght :- 8   , Type :- Numeric
-FIXED           : Options:- YES, NO
-ACCUMLATED  	: Options:- YES, NO
-FLOATING  	: Options:- YES, NO
-MIXED.TYPE	: Options:- YES, NO
-WRITE.FLAG      : Options:- YES, NO
+#### TABLE 1 "MBSC.TRAIN."EMPLOYEE NAME"
+##### *===================
+##### Requirement fields:
+##### *===================
+###### DESCRIPTION 	: lenght :- 50  , Type :- ANY     , Multi language
+###### TENOR  		: lenght :- 3   , Type :- Numeric
+###### FREQUENCY 	: lenght :- 3   , Type :- Numeric
+###### RATE  		: lenght :- 6   , Type :- Numeric
+###### INT.RATE 	: lenght :- 8   , Type :- Numeric
+###### CATEGORY 	: lenght :- 8   , Type :- Numeric , linked to table  "CATEGORY"
+###### CURRENCY        : lenght :- 3 	, Type :- ANY     , linked to table  "CURRENCY"
+###### DENOMINATIONS   : lenght :- 34  , Type :- Numeric 
+###### CUSTOMER.ID     : lenght :- 8   , Type :- Numeric , linked to table "CUSTOMER"
+###### BASIC.KEY  	: lenght :- 8   , Type :- Numeric
+###### INT.SPREAD      : lenght :- 8   , Type :- Numeric
+###### BASIC.KEY  	: lenght :- 8   , Type :- Numeric
+###### FIXED           : Options:- YES, NO
+###### ACCUMLATED  	: Options:- YES, NO
+###### FLOATING  	: Options:- YES, NO
+###### MIXED.TYPE	: Options:- YES, NO
+###### WRITE.FLAG      : Options:- YES, NO
+###### 2 RESERVED 
+#### *===============================================================================
+#### TABLE 2 "MBSC.CONC."EMPLOYEE NAME"
+#### *===================
+#### Requirement fields:
+#### *===================
+#### FLAG            : lenght :- 3 , Type :- ANY
+#### *===============================================================================
+#### ID ROUTINE :
+#### *===========
 
-
-10 RESERVED 
-*===============================================================================
-TABLE 2 "MBSC.CONC."EMPLOYEE NAME"
-*===================
-Requirement fields:
-*===================
-FLAG            : lenght :- 3 , Type :- ANY
-*===============================================================================
-ID ROUTINE :
-*===========
-
-ID Should be XXX-YY-BBbb
+###### ID Should be XXX-YY-BBbb
 
 			XXX: Numbers
 			YY : Numbers
@@ -75,11 +73,11 @@ ID Should be XXX-YY-BBbb
 
 			YY NOT GREATER THAN BB
 
-ELSE "INVALID ID FORMAT"
+###### ELSE "INVALID ID FORMAT"
 			
-*===============================================================================	
-CHECK RECORD ROUTINE :
-*===================== 
+#### *===============================================================================	
+#### CHECK RECORD ROUTINE :
+#### *===================== 
 
 		TENOR field will be filled automatic with XXX
 		FREQUENCY will be filled automatic with YY
@@ -87,9 +85,9 @@ CHECK RECORD ROUTINE :
 		 
 
 		if bb equal MX , MIXED.TYPE field should be equal yes
-*===============================================================================
-VALIDATION RTN:
-*===============
+#### *===============================================================================
+#### VALIDATION RTN:
+#### *===============
 			
 		floating yes ,and then below mention fields must be mandotry
 			BASIC.KEY
@@ -100,18 +98,18 @@ VALIDATION RTN:
 			RATE  
 			INT.RATE
 
-ELSE "(Field name), Should be mandatory"
-*===============================================================================
-Input ROUTINE
-*=============
+#### ELSE "(Field name), Should be mandatory"
+#### *===============================================================================
+#### Input ROUTINE
+#### *=============
 
-Check if the CUSTOMER.ID field sector in CUSTOMER table equal 1001 
+#### Check if the CUSTOMER.ID field sector in CUSTOMER table equal 1001 
 
-ELSE "Customer Should be indvidual"
-*===============================================================================
-AUTHORISATION ROUTINE
-*===================
+#### ELSE "Customer Should be indvidual"
+#### *===============================================================================
+#### AUTHORISATION ROUTINE
+#### *===================
 
-Check If WRITE.FLAG field equal "YES" 
+#### Check If WRITE.FLAG field equal "YES" 
 
-write YES on FLAG field in TABLE 2
+#### write YES on FLAG field in TABLE 2
