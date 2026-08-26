@@ -1,0 +1,109 @@
+package task3.com;
+
+import com.temenos.api.TStructure;
+import com.temenos.t24.api.complex.eb.templatehook.TransactionContext;
+import com.temenos.t24.api.hook.system.RecordLifecycle;
+
+/**
+ * TODO: Document me!
+ *
+ * @author DELL
+ *
+ */
+public class Validation extends RecordLifecycle {
+
+    @Override
+    public void defaultFieldValues(String application, String currentRecordId, TStructure currentRecord,
+            TStructure unauthorisedRecord, TStructure liveRecord, TransactionContext transactionContext) {
+        
+        StMbscTrain rec=new StMbscTrain(currentRecordId);
+        if(rec.getFloating().getValue().equals("YES")){
+            if(rec.getBasicKey().getValue().isEmpty()){
+                throw new Error("BASIC.KEY IS MANDATORY WHEN YES");
+            }
+            if(rec.getIntSpread().getValue().isEmpty()){
+                throw new Error("INT.SPREAD IS MANADTORY");
+            }
+        }
+        if(rec.getRate().getValue().isEmpty()){
+            throw new Error("RATE IS MANADTORY");
+        }
+        if(rec.getIntRate().getValue().isEmpty()){
+            throw new Error("INT.RATE IS MANADTORY");
+        }
+        return currentRecordId;
+    }
+    
+
+}
+
+/////////////////////
+package task3.com;
+
+import com.temenos.api.TStructure;
+import com.temenos.t24.api.complex.eb.templatehook.TransactionContext;
+import com.temenos.t24.api.hook.system.RecordLifecycle;
+
+/**
+ * TODO: Document me!
+ *
+ * @author DELL
+ *
+ */
+public class CheckRecord extends RecordLifecycle{
+
+    @Override
+    public void defaultFieldValues(String application, String currentRecordId, TStructure currentRecord,
+            TStructure unauthorisedRecord, TStructure liveRecord, TransactionContext transactionContext) {
+        
+        StMbscTrain rec = new StMbscTrain (currentRecord);
+        
+        String tenor=currentRecordId.substring(0,3);
+        String frequency=currentRecordId.substring(4,6);
+        String bb=currentRecordId.substring(7,9);
+        String letters=currentRecordId.substring(9,11);
+        
+        rec.setTenor(tenor);
+        rec.setFrequency(frequency);
+        rec.setProdType(tenor+frequency+bb+letters);
+        
+        if(letters.equals("MX")){
+            rec.setMixedType("YES");
+        }
+        
+        
+    }
+
+}
+//////////////////////////
+package task3.com;
+
+import com.temenos.t24.api.complex.eb.templatehook.TransactionContext;
+import com.temenos.t24.api.hook.system.RecordLifecycle;
+
+/**
+ * TODO: Document me!
+ *
+ * @author DELL
+ *
+ */
+public class IdRoutine extends RecordLifecycle {
+
+    @Override
+    public String checkId(String currentRecordId, TransactionContext transactionContext) {
+        if(!currentRecordId.matches("\\d{3}-\\d{2}-\\d{4}")){
+            throw new Error("INVALID FORMAT");
+        }
+        int yy= Integer.parseInt(currentRecordId.substring(4,6));
+        int bb=Integer.parseInt(currentRecordId.substring(7,9));
+        if(yy>bb){
+            throw new Error("INVALID FORMAT");
+        }
+        return currentRecordId;
+    }
+
+}
+
+
+////////////////////////
+
