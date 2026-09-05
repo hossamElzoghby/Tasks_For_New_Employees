@@ -113,3 +113,160 @@
 #### Check If WRITE.FLAG field equal "YES" 
 
 #### write YES on FLAG field in TABLE 2
+#### *===============================================================================
+
+### Java Multithreading Service Task
+
+Develop a Java multithreading service that processes customer accounts and deducts a fixed amount from eligible accounts.
+Requirements
+The service should:
+
+Retrieve all accounts that meet the required criteria.
+Process accounts concurrently using multiple threads.
+Deduct 10 USD from all accounts that satisfy:
+Category: 1001
+Currency: USD
+Generate an FT transaction for each eligible account.
+Send the FT through OFS.
+
+### INFOBASIC
+### -ID Routine
+
+The ID Routine is responsible for validating the FT ID.
+
+Validation
+
+The routine should check the FT ID length.
+
+IF FT ID length > 13
+    THEN raise an error
+ELSE
+    Continue processing
+### -Validation Routine
+
+The Validation Routine validates the debit currency.
+
+Validation Rule
+
+The debit currency must be:
+
+USD
+
+If the debit currency is not USD, the routine should raise an error.
+
+### -Input Routine
+
+The Input Routine validates the FT commission.
+
+Requirement
+
+If the commission is waived:
+
+Commission = WAIVED
+
+the routine should raise an override to notify the user that the commission has been waived.
+
+### -Authorization Routine
+
+The Authorization Routine should create an AC Lock Event on the debit account.
+
+Requirements
+
+The AC Lock Event should be created using:
+
+Debit Account
+Debit Amount
+
+### -Transaction Template
+
+Create a transaction template containing the following fields:
+TXN.TYPE
+DEBIT.ACCOUNT
+DEBIT.AMT
+DEBIT.CURRENCY
+CREDIT.ACCOUNT
+STATUS
+
+### -INFOBASIC Multithreading 
+
+Create a INFOBASIC multithreading service that deducts 10 EUR from eligible accounts.
+
+Eligibility Criteria
+
+The service should process accounts where:
+
+CATEGORY = 1001
+CURRENCY = EUR
+Transaction Amount
+10 EUR
+Processing Requirements
+
+For every eligible account:
+
+
+Create the required FT transaction.
+Deduct 10 EUR.
+Submit the transaction through OFS.
+Validate the OFS response.
+Save the FT details into the transaction template.
+Set the transaction status according to the OFS response.
+OFS Response Handling
+Successful OFS Response
+
+If OFS returns a successful response:
+
+STATUS = SUCCESS
+
+The FT information should be written to the transaction template.
+
+Failed OFS Response
+
+If OFS returns a failure response:
+
+STATUS = FAILED
+
+The FT information should still be written to the transaction template together with the failed status.
+
+### IRIS APIs
+
+Implement four REST APIs using IRIS for Customer management.
+
+###   -GET Customer API
+Purpose
+Retrieve basic customer information.
+Method
+GET
+
+###  -POST Customer API
+Purpose
+
+Create a new customer.
+
+Method
+POST
+
+###  -PUT Customer Authorization API
+Purpose
+
+Authorize the newly created customer.
+
+Method
+PUT
+
+###  -DELETE Customer API
+Purpose
+
+Delete an unauthorized new customer.
+
+Method
+DELETE
+
+
+				
+
+
+
+#### يمث
+
+
+
