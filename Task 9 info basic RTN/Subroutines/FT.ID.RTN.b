@@ -1,0 +1,9 @@
+SUBROUTINE FT.ID.RTN
+    $INSERT I_COMMON
+    $INSERT I_EQUATE
+
+    ID = COMI
+    IF LEN(ID) GT 13 THEN
+        E = 'ID should be less than 13 char'
+    END
+END
