@@ -1,0 +1,15 @@
+SUBROUTINE MBSC.InfoBasicMT.LOAD
+    $INSERT I_COMMON
+    $INSERT I_EQUATE
+    $INSERT I_MBSC.InfoBasicMT.COMMON
+    $INSERT I_F.FUNDS.TRANSFER
+    $INSERT I_F.MBSC.InfoBasicTemp
+
+    FN.FT='F.FUNDS.TRANSFER'
+    FN.MBSC.InfoBasicTemp='F.MBSC.InfoBasicTemp'
+    FN.ACC='F.ACCOUNT'
+    CALL OPF(FN.FT,F.FT)
+    CALL OPF(FN.MBSC.InfoBasicTemp,F.MBSC.InfoBasicTemp)
+    CALL OPF(FN.ACC,F.ACC)
+    
+END

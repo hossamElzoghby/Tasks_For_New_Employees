@@ -24,7 +24,7 @@ public class FTMultithreading extends ServiceLifecycle{
         List<String> recIds = null;
         DataAccess da = new DataAccess(this);
         
-        recIds = da.selectRecords("BNK", "ACCOUNT", "", "WITH CURRENCY EQ EUR AND CATEGORY EQ 1001");
+        recIds = da.selectRecords("BNK", "ACCOUNT", "", "WITH CURRENCY EQ USD AND CATEGORY EQ 1001");
         
         return recIds;
       
@@ -38,7 +38,7 @@ public class FTMultithreading extends ServiceLifecycle{
         
         ftRec.setTransactionType("AC");
         ftRec.setDebitAcctNo(id);
-        ftRec.setDebitCurrency("EUR");
+        ftRec.setDebitCurrency("USD");
         ftRec.setDebitAmount("10");
         ftRec.setCreditAcctNo("120456");
         

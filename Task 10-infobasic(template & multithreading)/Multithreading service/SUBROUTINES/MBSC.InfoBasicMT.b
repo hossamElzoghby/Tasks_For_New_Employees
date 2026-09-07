@@ -1,0 +1,64 @@
+SUBROUTINE MBSC.InfoBasicMT(SEL.LIST.ID)
+
+    $INSERT I_COMMON
+    $INSERT I_EQUATE
+    $INSERT I_MBSC.InfoBasicMT.COMMON
+    $INSERT I_F.FUNDS.TRANSFER
+    $INSERT I_F.MBSC.InfoBasicTemp
+
+    R.FT = ''
+
+    R.FT<FT.TRANSACTION.TYPE> = 'AC'
+    R.FT<FT.DEBIT.ACCT.NO> = SEL.LIST.ID
+    R.FT<FT.DEBIT.CURRENCY> = 'EUR'
+    R.FT<FT.DEBIT.AMOUNT> = '10'
+    R.FT<FT.CREDIT.ACCT.NO> = 'EUR1401003210001'
+
+    OFS.MSG = ''
+    TRANSACTION.ID = ''
+    Y.APPLICATION = 'FUNDS.TRANSFER'
+    Y.FUNC = 'I'
+    Y.OPER = 'PROCESS'
+    Y.VERSION = 'FUNDS.TRANSFER,BATCH2'
+    Y.GTS.MODE = '1'
+    Y.NO.OF.AUTH = '0'
+    Y.OFS.SOURCE = 'BULK.OFS'
+    Y.THE.RESPONSE = ''
+    Y.TXN.RESULT = ''
+
+    CALL OFS.BUILD.RECORD(Y.APPLICATION,Y.FUNC,Y.OPER,Y.VERSION,Y.GTS.MODE,Y.NO.OF.AUTH,TRANSACTION.ID,R.FT,OFS.MSG)
+    CALL OFS.CALL.BULK.MANAGER(Y.OFS.SOURCE,OFS.MSG,Y.THE.RESPONSE,Y.TXN.RESULT)
+
+    Y.MSG.INFO   = FIELD(Y.THE.RESPONSE, ',', 1)
+    
+    Y.OFS.STATUS = FIELD(Y.MSG.INFO, '/', 3)
+    IF Y.OFS.STATUS EQ '1' THEN
+        Y.STATUS = 'SUCCESS'
+    END ELSE
+        Y.STATUS = 'FAILED'
+    END
+
+    Y.FT.ID= FIELD(Y.MSG.INFO, '/', 1)
+    CHANGE '<requests>' TO '' IN Y.FT.ID
+    CHANGE '<request>' TO '' IN Y.FT.ID
+    CHANGE '</request>' TO '' IN Y.FT.ID
+    CHANGE '</requests>' TO '' IN Y.FT.ID
+    Y.FT.ID = TRIM(Y.FT.ID)
+    
+
+    R.DATA = ''
+
+    R.DATA<MbscInfobasictemp_TxnType> = R.FT<FT.TRANSACTION.TYPE>
+    R.DATA<MbscInfobasictemp_DebitAcc> = R.FT<FT.DEBIT.ACCT.NO>
+    R.DATA<MbscInfobasictemp_DebitCur> = R.FT<FT.DEBIT.CURRENCY>
+    R.DATA<MbscInfobasictemp_DebitAmt> = R.FT<FT.DEBIT.AMOUNT>
+    R.DATA<MbscInfobasictemp_CreditAcc> = R.FT<FT.CREDIT.ACCT.NO>
+    R.DATA<MbscInfobasictemp_Status> = Y.STATUS
+
+    IF Y.FT.ID NE '' THEN
+        CALL F.WRITE(FN.MBSC.InfoBasicTemp, Y.FT.ID, R.DATA)
+    END ELSE
+        CALL F.WRITE(FN.MBSC.InfoBasicTemp, SEL.LIST.ID, R.DATA)
+    END
+
+END
