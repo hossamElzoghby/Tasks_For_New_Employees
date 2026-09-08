@@ -1,0 +1,17 @@
+SUBROUTINE FT.VAL.CUR
+    $INSERT I_COMMON
+    $INSERT I_EQUATE
+    $INSERT I_F.FUNDS.TRANSFER
+    
+    
+    DEPT.CUR = COMI
+    
+    IF DEPT.CUR NE 'USD' THEN
+        
+        ETEXT='AA-AA.FT.MBSC.CUR'
+        CALL STORE.END.ERROR
+    END
+    
+RETURN
+END
+  
