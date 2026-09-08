@@ -1,0 +1,12 @@
+SUBROUTINE FT.INPUT.RTN
+    $INSERT I_COMMON
+    $INSERT I_EQUATE
+    $INSERT I_F.FUNDS.TRANSFER
+    COMMISSION =  R.NEW(FT.COMMISSION.CODE)
+    IF COMMISSION EQ 'WAIVE' THEN
+        TEXT = 'the user that the commission has been waived'
+        CURR.NO=''
+        CALL STORE.OVERRIDE(CURR.NO)
+    END
+
+END
