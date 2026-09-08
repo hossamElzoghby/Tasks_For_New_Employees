@@ -1,62 +1,40 @@
-package task3.com;
+package routines;
 
-import com.temenos.api.TStructure;
 import com.temenos.t24.api.complex.eb.templatehook.TransactionContext;
 import com.temenos.t24.api.hook.system.RecordLifecycle;
 
-/**
- * TODO: Document me!
- *
- * @author DELL
- *
- */
-public class Validation extends RecordLifecycle {
-
+public class IDRTN extends RecordLifecycle {
     @Override
-    public void defaultFieldValues(String application, String currentRecordId, TStructure currentRecord,
-            TStructure unauthorisedRecord, TStructure liveRecord, TransactionContext transactionContext) {
-        
-        StMbscTrain rec=new StMbscTrain(currentRecordId);
-        if(rec.getFloating().getValue().equals("YES")){
-            if(rec.getBasicKey().getValue().isEmpty()){
-                throw new Error("BASIC.KEY IS MANDATORY WHEN YES");
-            }
-            if(rec.getIntSpread().getValue().isEmpty()){
-                throw new Error("INT.SPREAD IS MANADTORY");
-            }
+    public String checkId(String currentRecordId, TransactionContext transactionContext) {
+        if(!currentRecordId.matches("\\d{3}-\\d{2}-\\d{2}[A-Za-z]{2}")){
+            throw new Error(currentRecordId+"INVALID FORMAT");
         }
-        if(rec.getRate().getValue().isEmpty()){
-            throw new Error("RATE IS MANADTORY");
+        int yy= Integer.parseInt(currentRecordId.substring(4,6));
+        int bb=Integer.parseInt(currentRecordId.substring(7,9));
+        if(yy>bb){
+            throw new Error(currentRecordId+"INVALID FORMAT");
         }
-        if(rec.getIntRate().getValue().isEmpty()){
-            throw new Error("INT.RATE IS MANADTORY");
-        }
-        return currentRecordId;
+        return currentRecordId+"SYSTEM";
     }
-    
-
 }
+///////////////////////////////
+package routines;
 
-/////////////////////
-package task3.com;
-
+import com.temenos.t24.api.hook.system.RecordLifecycle;
+import com.temenos.t24.api.records.stmbsctrain.StMbscTrainRecord;
 import com.temenos.api.TStructure;
 import com.temenos.t24.api.complex.eb.templatehook.TransactionContext;
-import com.temenos.t24.api.hook.system.RecordLifecycle;
 
-/**
- * TODO: Document me!
- *
- * @author DELL
- *
- */
-public class CheckRecord extends RecordLifecycle{
+
+
+
+public class CHECKREC extends RecordLifecycle{
 
     @Override
     public void defaultFieldValues(String application, String currentRecordId, TStructure currentRecord,
-            TStructure unauthorisedRecord, TStructure liveRecord, TransactionContext transactionContext) {
+            TStructure unauthorisedRecord, TStructure liveRecord,TransactionContext transactionContext) {
         
-        StMbscTrain rec = new StMbscTrain (currentRecord);
+        StMbscTrainRecord rec = new StMbscTrainRecord (currentRecord);
         
         String tenor=currentRecordId.substring(0,3);
         String frequency=currentRecordId.substring(4,6);
@@ -65,21 +43,21 @@ public class CheckRecord extends RecordLifecycle{
         
         rec.setTenor(tenor);
         rec.setFrequency(frequency);
-        rec.setProdType(tenor+frequency+bb+letters);
+        rec.setMixedType(tenor+frequency+bb+letters);
         
         if(letters.equals("MX")){
             rec.setMixedType("YES");
-        }
-        
-        
     }
 
+    }
 }
-//////////////////////////
-package task3.com;
+////////////////////////////////////////////
+package routines;,
 
+import com.temenos.api.TStructure;
 import com.temenos.t24.api.complex.eb.templatehook.TransactionContext;
 import com.temenos.t24.api.hook.system.RecordLifecycle;
+import com.temenos.t24.api.records.stmbsctrain.StMbscTrainRecord;
 
 /**
  * TODO: Document me!
@@ -87,23 +65,64 @@ import com.temenos.t24.api.hook.system.RecordLifecycle;
  * @author DELL
  *
  */
-public class IdRoutine extends RecordLifecycle {
+public class VALIDREC extends RecordLifecycle{
+    @Override
+    public void defaultFieldValues(String application, String currentRecordId, TStructure currentRecord,
+            TStructure unauthorisedRecord, TStructure liveRecord,TransactionContext transactionContext) {
+        
+        StMbscTrainRecord rec = new StMbscTrainRecord (currentRecord);
+        
+       if(rec.getFloating().getValue().equals("YES")){
+           if(rec.getBasicKey().getValue().isEmpty()){
+               throw new Error("BASIC.KEY, SHOULD BE MANDATORY");
+           }
+           if(rec.getIntSpread().getValue().isEmpty()){
+               throw new Error("INT.SPREAD, SHOULD BE MANDATORY");
+           }
+    }
+       if(rec.getAccumlated().getValue().equals("YES")){
+           if(rec.getRate().getValue().isEmpty()){
+               throw new Error("RATE, SHOULD BE MANDATORY");
+           }
+           if(rec.getIntRate().getValue().isEmpty()){
+               throw new Error("INT.RATE, SHOULD BE MANDATORY");
+           }
+       }
+    }
+}
+////////////////////////////////
+package routines;
+
+import com.temenos.api.TStructure;
+import com.temenos.api.TValidationResponse;
+import com.temenos.t24.api.complex.eb.templatehook.TransactionContext;
+import com.temenos.t24.api.hook.system.RecordLifecycle;
+import com.temenos.t24.api.records.customer.CustomerRecord;
+import com.temenos.t24.api.records.stmbsctrain.StMbscTrainRecord;
+
+/**
+ * TODO: Document me!
+ *
+ * @author DELL
+ *
+ */
+public class INPUTRTN extends RecordLifecycle {
 
     @Override
-    public String checkId(String currentRecordId, TransactionContext transactionContext) {
-        if(!currentRecordId.matches("\\d{3}-\\d{2}-\\d{4}")){
-            throw new Error("INVALID FORMAT");
+    public TValidationResponse validateRecord(String application, String currentRecordId, TStructure currentRecord,
+            TStructure unauthorisedRecord, TStructure liveRecord, TransactionContext transactionContext) {
+       
+        StMbscTrainRecord rec = new StMbscTrainRecord (currentRecord);
+        String CustomerId=rec.getCustomerId().getValue();
+       
+        CustomerRecord cust=new CustomerRecord(currentRecord);
+        
+        if(!cust.getSector().getValue().equals("1001")){
+            cust.getSector().setError("SECTOR SHOULD BE INDIVIDUAL");
         }
-        int yy= Integer.parseInt(currentRecordId.substring(4,6));
-        int bb=Integer.parseInt(currentRecordId.substring(7,9));
-        if(yy>bb){
-            throw new Error("INVALID FORMAT");
-        }
-        return currentRecordId;
+     return cust.getValidationResponse();
+        
     }
 
 }
-
-
-////////////////////////
 
