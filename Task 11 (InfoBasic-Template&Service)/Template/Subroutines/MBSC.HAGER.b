@@ -1,7 +1,7 @@
 *-----------------------------------------------------------------------------
 * <Rating>-13</Rating>
 *-----------------------------------------------------------------------------
-SUBROUTINE MBSC.BATCH2
+SUBROUTINE MBSC.HAGER
 *-----------------------------------------------------------------------------
 *<doc>
 * TODO add a description of the application here.
@@ -23,8 +23,8 @@ SUBROUTINE MBSC.BATCH2
     $INSERT I_Table
 * </region>
 *-----------------------------------------------------------------------------
-    Table.name = 'MBSC.BATCH2'        ;* Full application name including product prefix
-    Table.title = 'MBSC BATCH2'       ;* Screen title
+    Table.name = 'MBSC.HAGER'        ;* Full application name including product prefix
+    Table.title = 'MBSC HAGER'       ;* Screen title
     Table.stereotype = 'H'    ;* H, U, L, W or T
     Table.product = 'EB'      ;* Must be on EB.PRODUCT
     Table.subProduct = ''     ;* Must be on EB.SUB.PRODUCT
@@ -32,7 +32,7 @@ SUBROUTINE MBSC.BATCH2
     Table.systemClearFile = 'Y'         ;* As per FILE.CONTROL
     Table.relatedFiles = ''   ;* As per FILE.CONTROL
     Table.isPostClosingFile = ''        ;* As per FILE.CONTROL
-    Table.equatePrefix = 'BATCH2'        ;* Use to create I_F.EB.LOG.PARAMETER
+    Table.equatePrefix = 'HAGER'        ;* Use to create I_F.EB.LOG.PARAMETER
 *-----------------------------------------------------------------------------
     Table.idPrefix = ''       ;* Used by EB.FORMAT.ID if set
     Table.blockedFunctions = ''         ;* Space delimeted list of blocked functions

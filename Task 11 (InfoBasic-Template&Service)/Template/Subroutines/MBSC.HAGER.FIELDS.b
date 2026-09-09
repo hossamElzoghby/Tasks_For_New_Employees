@@ -1,7 +1,7 @@
 *-----------------------------------------------------------------------------
 * <Rating>-7</Rating>
 *-----------------------------------------------------------------------------
-SUBROUTINE MBSC.BATCH2.FIELDS
+SUBROUTINE MBSC.HAGER.FIELDS
 *-----------------------------------------------------------------------------
 *<doc>
 * Template for field definitions routine MBSC.BATCH2.FIELDS
@@ -48,7 +48,7 @@ SUBROUTINE MBSC.BATCH2.FIELDS
     EB.Template.FieldSetcheckfile('ACCOUNT')
     
     neighbour = ''
-    fieldName = 'DEBIR.CUR'
+    fieldName = 'DEBIT.CUR'
     fieldLength = '3'
     fieldType = 'A'
     EB.Template.TableAddfielddefinition(fieldName, fieldLength, fieldType, neighbour)
@@ -67,6 +67,18 @@ SUBROUTINE MBSC.BATCH2.FIELDS
     EB.Template.TableAddfielddefinition(fieldName, fieldLength, fieldType, neighbour)
     EB.Template.FieldSetcheckfile('ACCOUNT')
     
+    neighbour = ''
+    fieldName = 'FT.REF'
+    fieldLength = '20'
+    fieldType = 'A'
+    EB.Template.TableAddfielddefinition(fieldName, fieldLength, fieldType, neighbour)
+
+    neighbour = ''
+    fieldName = 'STATUS'
+    fieldLength = '10'
+    fieldType = 'A'
+    EB.Template.TableAddfielddefinition(fieldName, fieldLength, fieldType, neighbour)
+  
 *-----------------------------------------------------------------------------
     EB.Template.TableAddreservedfield('RESERVED1')
     EB.Template.TableAddreservedfield('RESERVED2')
