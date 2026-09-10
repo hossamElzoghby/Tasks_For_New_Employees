@@ -1,19 +1,12 @@
 SUBROUTINE FT.ID.RTN
     $INSERT I_COMMON
     $INSERT I_EQUATE
-    $INSERT I_F.DATES
     
-    FN.DATES = 'F.DATES'
-    F.DATES = ''
-    REC.ID = 'AU0010001'
-    CALL OPF(FN.DATES, F.DATES)
-    CALL F.READ(FN.DATES, REC.ID, R.DATE, F.DATES, R.D.ERROR)
-    
-    JUL.DATE = R.DATE(EB.DAT.JULIAN.DATE)
     ID = COMI
+    ID.LENGTH = LEN(ID)
     
-    IF ID[3,5] NE '22109' THEN
-        E = 'JULIAN DATE NOT FOUND'
+    IF ID.LENGTH > 13 THEN
+        E = 'ID Should not be greater than 13'
     END
      
 END
