@@ -1,0 +1,22 @@
+* I_F.MBSC.Temp Created 10 SEP 26 at 02:10AM by Steven Nagy/SUPERVISOR
+*      PREFIX[XX.YY]
+                     EQU XX.YY.TXN.TYPE TO 1,   MbscTemp_TxnType TO 1,
+                        XX.YY.DEBIT.ACC TO 2,   MbscTemp_DebitAcc TO 2,
+                        XX.YY.DEBIT.CUR TO 3,   MbscTemp_DebitCur TO 3,
+                        XX.YY.DEBIT.AMT TO 4,   MbscTemp_DebitAmt TO 4,
+                       XX.YY.CREDIT.ACC TO 5,   MbscTemp_CreditAcc TO 5,
+                           XX.YY.STATUS TO 6,   MbscTemp_Status TO 6,
+                        XX.YY.Reserved1 TO 7,   MbscTemp_Reserved1 TO 7,
+                        XX.YY.Reserved2 TO 8,   MbscTemp_Reserved2 TO 8,
+                        XX.YY.Reserved3 TO 9,   MbscTemp_Reserved3 TO 9,
+                        XX.YY.LOCAL.REF TO 10,  MbscTemp_LocalRef TO 10,
+                         XX.YY.OVERRIDE TO 11,  MbscTemp_Override TO 11,
+                    XX.YY.RECORD.STATUS TO 12,  MbscTemp_RecordStatus TO 12,
+                          XX.YY.CURR.NO TO 13,  MbscTemp_CurrNo TO 13,
+                         XX.YY.INPUTTER TO 14,  MbscTemp_Inputter TO 14,
+                        XX.YY.DATE.TIME TO 15,  MbscTemp_DateTime TO 15,
+                       XX.YY.AUTHORISER TO 16,  MbscTemp_Authoriser TO 16,
+                          XX.YY.CO.CODE TO 17,  MbscTemp_CoCode TO 17,
+                        XX.YY.DEPT.CODE TO 18,  MbscTemp_DeptCode TO 18,
+                     XX.YY.AUDITOR.CODE TO 19,  MbscTemp_AuditorCode TO 19,
+                  XX.YY.AUDIT.DATE.TIME TO 20,  MbscTemp_AuditDateTime TO 20
